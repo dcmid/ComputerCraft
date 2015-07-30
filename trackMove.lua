@@ -99,7 +99,6 @@ function gotoX(pos)
     while xCoord > pos do
       mine()
     end
-  end
   elseif xCoord < pos then
     orientTo(1)
     while xCoord < pos do
@@ -114,7 +113,6 @@ function gotoY(pos)
     while yCoord > pos do
       down()
     end
-  end
   elseif yCoord < pos then
     while yCoord < pos do
       up()
@@ -129,7 +127,6 @@ function gotoZ(pos)
     while zCoord > pos do
       mine()
     end
-  end
   elseif zCoord < pos then
     orientTo(0)
     while zCoord < pos do

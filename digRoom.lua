@@ -49,7 +49,6 @@ for i = 1, height do
       end
       trackMove.mine()
       if trackMove.orientation ~= 0 and trackMove.orientation ~= 2 then
-      else
         print("turtle facing wrong way 1")
         return
       end
