@@ -44,8 +44,27 @@ for i = 1, height do
   for j = 1, width do
     for k = 1, depth - 1 do
       if shouldReturn() then
+        tempX = trackMove.xCoord
+        tempY = trackMove.yCoord
+        tempZ = trackMove.zCoord
+        tempO = trackMove.orientation
         returnToOrigin()
-        return
+        if turtle.inspect() == "mincraft.chest" then
+          for i = 1, 16 do
+            if not turtle.drop() then
+              print("Chest full")
+              return
+            end
+          end
+        end
+        if turtle.getFuelLevel < depth * width * height then
+          print("Fuel critically low")
+          return
+        end
+        trackMove.gotoZ(tempZ)
+        trackMove.gotoX(tempX)
+        trackMove.gotoY(tempY)
+        trackMove.orientTo(tempO)
       end
       trackMove.mine()
       if trackMove.orientation ~= 0 and trackMove.orientation ~= 2 then
