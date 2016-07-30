@@ -71,13 +71,12 @@ for i = 1, height do
         tempY = trackMove.yCoord
         tempZ = trackMove.zCoord
         tempO = trackMove.orientation
-        print(tempX .. ", " .. tempY .. ", " .. tempZ .. ", " .. tempO)
+        print("Temp Coords: " .. tempX .. ", " .. tempY .. ", " .. tempZ .. ", " .. tempO)
         returnToOrigin()
         print(trackMove.xCoord .. ", " .. trackMove.yCoord .. ", " .. trackMove.zCoord .. ", " .. trackMove.orientation)
         if not chestDump() then
           return
         end
-        print(trackMove.xCoord .. ", " .. trackMove.yCoord .. ", " .. trackMove.zCoord .. ", " .. trackMove.orientation)
         trackMove.gotoX(tempX)
         trackMove.gotoY(tempY)
         trackMove.gotoZ(tempZ)

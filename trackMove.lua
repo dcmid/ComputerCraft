@@ -58,6 +58,7 @@ function mine()
   else
     xCoord = xCoord - 1
   end
+  print("Current Position: " .. xCoord .. ", " .. yCoord .. ", " .. zCoord .. ", " .. orientation)
   return
 end
 
