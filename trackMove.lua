@@ -1,9 +1,11 @@
 os.loadAPI("genDig")
 
+-- API for tracking turtle position.
+
 xCoord = 0
 yCoord = 0
 zCoord = 0
---orientation relative to starting position. 0 = forward, 1 = right, 2 = backward, 3 = left
+-- Orientation relative to starting position. 0 = forward, 1 = right, 2 = backward, 3 = left
 orientation = 0
 
 function adjustOrientation(change)

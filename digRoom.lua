@@ -5,10 +5,12 @@
 -- Make entries relative to turtle's position.
 --   The X direction runs from the turtle's left to its right
 --   The Y direction runs from bedrock to the sky
---   The Z direction runs from behind the turtle through the front of it\n
+--   The Z direction runs from behind the turtle through the front of it
 
 os.loadAPI("trackMove")
 
+
+-- Prompt user for room preferences
 write("Left or Right (l/r): ")
 lrDir = read()
 if lrDir ~= "l" and lrDir ~= "r" then
@@ -29,10 +31,12 @@ write("Depth (Z): ")
 depth = tonumber(read())
 shouldTurnRight = lrDir == "r"
 
+-- True if all inventory slots are occupied or if fuel is low
 function shouldReturn()
   return turtle.getItemCount(16) > 0 or turtle.getFuelLevel() <= math.abs(trackMove.xCoord) + math.abs(trackMove.yCoord) + math.abs(trackMove.zCoord)
 end
 
+-- Return turtle to program start location
 function returnToOrigin()
   trackMove.gotoY(0)
   trackMove.gotoX(0)
@@ -40,6 +44,25 @@ function returnToOrigin()
   return true
 end
 
+-- Empty inventory into chest in front of turtle. False if chest is full
+function chestDump()
+  iSucc, block = turtle.inspect()
+  if iSucc and (block.name == "mincraft.chest" or block.name == "IronChest:BlockIronChest") then
+    for i = 1, 16 do
+      turtle.select(i)
+      if turtle.getItemCount() ~= 0 then
+        if not turtle.drop() then
+          print("Chest full")
+          return false
+        end
+      end
+    end
+  end
+  turtle.select(1)
+  return true
+end
+
+turtle.select(1)
 for i = 1, height do
   for j = 1, width do
     for k = 1, depth - 1 do
@@ -48,22 +71,16 @@ for i = 1, height do
         tempY = trackMove.yCoord
         tempZ = trackMove.zCoord
         tempO = trackMove.orientation
+        print(tempX .. ", " .. tempY .. ", " .. tempZ .. ", " .. tempO)
         returnToOrigin()
-        if turtle.inspect() == "mincraft.chest" then
-          for i = 1, 16 do
-            if not turtle.drop() then
-              print("Chest full")
-              return
-            end
-          end
-        end
-        if turtle.getFuelLevel < depth * width * height then
-          print("Fuel critically low")
+        print(trackMove.xCoord .. ", " .. trackMove.yCoord .. ", " .. trackMove.zCoord .. ", " .. trackMove.orientation)
+        if not chestDump() then
           return
         end
-        trackMove.gotoZ(tempZ)
+        print(trackMove.xCoord .. ", " .. trackMove.yCoord .. ", " .. trackMove.zCoord .. ", " .. trackMove.orientation)
         trackMove.gotoX(tempX)
         trackMove.gotoY(tempY)
+        trackMove.gotoZ(tempZ)
         trackMove.orientTo(tempO)
       end
       trackMove.mine()
@@ -94,7 +111,7 @@ for i = 1, height do
     end
   end
 end
-print(trackMove.xCoord)
-print(trackMove.yCoord)
-print(trackMove.zCoord)
+print("Finished!")
 returnToOrigin()
+chestDump()
+return

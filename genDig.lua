@@ -1,3 +1,5 @@
+-- Simple mining functions API
+
 function mine()
   turtle.dig()
   while not turtle.forward() do
@@ -15,7 +17,7 @@ end
 
 function up()
   while not turtle.up() do
-    turtle.mineUp()
+    turtle.digUp()
   end
   return true
 end
